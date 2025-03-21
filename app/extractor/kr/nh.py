@@ -1,28 +1,29 @@
 import re
 from datetime import datetime
-from app.schemas.trade_schema import TradeCreate
 
-def parse_nh_message(message: str) -> TradeCreate | None:
-    # 예시 메시지:
-    # "[NH투자증권] 삼성전자 매수 10주 체결 68,000원 03/20 13:45"
+def parse_nh_sms(message: str, user_id: int):
+    result = {}
 
-    pattern = r"\[(.*?)\]\s+(.*?)\s+(매수|매도)\s+(\d+)주\s+체결\s+([\d,]+)원\s+(\d{2}/\d{2})\s+(\d{2}:\d{2})"
-    match = re.search(pattern, message)
+    result["broker_name"] = "NH투자증권"
+    result["user_id"] = user_id
+    result["message_source"] = "SMS"
+    result["trade_time"] = datetime.now()
 
-    if not match:
-        return None
+    trade_type_match = re.search(r"체결종류\s*:\s*(매수|매도)", message)
+    stock_symbol_match = re.search(r"종목코드\s*:\s*(\d+)", message)
+    stock_name_match = re.search(r"종\s*목\s*명\s*:\s*(\S+)", message)
+    quantity_match = re.search(r"체결수량\s*:\s*([\d,]+)", message)
+    price_match = re.search(r"체결단가\s*:\s*([\d,]+)", message)
 
-    broker, stock, trade_type, qty, price, date_str, time_str = match.groups()
+    if trade_type_match:
+        result["trade_type"] = trade_type_match.group(1)
+    if stock_symbol_match:
+        result["stock_symbol"] = stock_symbol_match.group(1)
+    if stock_name_match:
+        result["stock_name"] = stock_name_match.group(1)
+    if quantity_match:
+        result["trade_quantity"] = int(quantity_match.group(1).replace(",", ""))
+    if price_match:
+        result["trade_price"] = float(price_match.group(1).replace(",", ""))
 
-    trade_datetime = datetime.strptime(f"2025/{date_str} {time_str}", "%Y/%m/%d %H:%M")
-
-    return TradeCreate(
-        user_id=1,  # 실제로는 사용자 매핑 필요
-        stock_symbol=stock,
-        trade_time=trade_datetime,
-        trade_price=float(price.replace(",", "")),
-        trade_quantity=int(qty),
-        trade_type="BUY" if trade_type == "매수" else "SELL",
-        message_source="SMS",
-        trade_status="CONFIRMED"
-    )
+    return result
