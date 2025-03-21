@@ -1,7 +1,8 @@
 import re
 from datetime import datetime
 
-def parse_nh_sms(message: str, user_id: int):
+def parse_nh_message(message: str, user_id: int):
+
     result = {}
 
     result["broker_name"] = "NH투자증권"
