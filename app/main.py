@@ -1,10 +1,12 @@
 from fastapi import FastAPI
-from .routes import users, trades
+from app.api import user_routes, trade_routes, message_routes
 
 app = FastAPI()
 
-app.include_router(users.router, prefix="/users", tags=["Users"])
-app.include_router(trades.router, prefix="/trades", tags=["Trades"])
+app.include_router(user_routes.router, prefix="/users", tags=["Users"])
+app.include_router(trade_routes.router, prefix="/trades", tags=["Trades"])
+app.include_router(message_routes.router, prefix="/messages", tags=["Messages"])
+
 
 @app.get("/")
 def read_root():
