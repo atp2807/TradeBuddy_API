@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database import get_db  # ✅ 여기를 database에서 가져오도록 수정
 from app import crud, schemas
-from app.models import User
+from ..models import User
 
 router = APIRouter()
 
