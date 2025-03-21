@@ -1,34 +1,14 @@
-from pydantic import BaseModel
+# app/schemas/user_schema.py
+from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
 
-# 사용자 스키마
-class UserBase(BaseModel):
-    email: str
+class UserCreate(BaseModel):
+    email: EmailStr
 
-class UserCreate(UserBase):
-    pass
-
-class UserResponse(UserBase):
+class UserResponse(BaseModel):
     id: int
+    email: EmailStr
     created_at: datetime
 
     class Config:
-        from_attributes = True
-
-# 거래 데이터 스키마
-class TradeBase(BaseModel):
-    stock_symbol: str
-    trade_time: datetime
-    price: float
-    quantity: int
-
-class TradeCreate(TradeBase):
-    pass
-
-class TradeResponse(TradeBase):
-    id: int
-    user_id: int
-
-    class Config:
-        from_attributes = True
+        from_attributes = True  # Pydantic v2 대응

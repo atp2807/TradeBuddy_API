@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 from app.database import get_db  # ✅ 여기를 database에서 가져오도록 수정
 from app import crud, schemas
 from ..models import User
+from app.schemas import UserCreate, UserResponse
+
 
 router = APIRouter()
 
