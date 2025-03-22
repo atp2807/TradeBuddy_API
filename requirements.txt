@@ -1,10 +1,17 @@
+# 🔧 FastAPI 서버 핵심 패키지
 fastapi==0.110.0
-uvicorn==0.29.0
-sqlalchemy==2.0.29
-pydantic==2.6.3
-email-validator==2.1.0.post1
-psycopg2-binary==2.9.9  # PostgreSQL용
-python-dotenv==1.0.1    # .env 사용 시
+uvicorn==0.29.0           # ASGI 서버, --reload 옵션 지원
 
-# 선택적으로 추가
-requests==2.31.0        # 외부 API 호출이 있다면
+# 🗃️ 데이터베이스
+sqlalchemy==2.0.29        # ORM
+psycopg2-binary==2.9.9    # PostgreSQL 드라이버
+
+# ✅ 데이터 유효성 검사
+pydantic==2.6.3           # 데이터 모델링 및 검증
+email-validator==2.1.0.post1  # 이메일 필드 검증용 (pydantic 의존성)
+
+# 🔐 환경 변수 관리
+python-dotenv==1.0.1      # .env 파일 불러오기용
+
+# 🌐 외부 API 호출 (선택)
+requests==2.31.0

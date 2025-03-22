@@ -6,5 +6,5 @@ from app.api.user_routes import router as user_router
 
 app = FastAPI()
 
-app.include_router(trade_router, prefix="/trades", tags=["trades"])
-app.include_router(user_router, prefix="/users", tags=["users"])
+app.include_router(user_router, prefix="/users", tags=["Users"])
+app.include_router(trade_router, prefix="/trades", tags=["Trades"])

@@ -1,15 +1,15 @@
 from pydantic import BaseModel, EmailStr
-
+from datetime import datetime
 
 class UserCreate(BaseModel):
-    username: str
     email: EmailStr
-
+    nickname: str = "SmartTraders"  # 기본값 설정
 
 class UserResponse(BaseModel):
     id: int
-    username: str
     email: EmailStr
+    nickname: str
+    created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True  # Pydantic v2용

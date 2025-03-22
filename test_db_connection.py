@@ -1,18 +1,22 @@
-# test_db_connection.py
+from sqlalchemy import create_engine, text
+from dotenv import load_dotenv
+import os
 
-from app.db.session import SessionLocal
-from sqlalchemy import text  # ✅ 수정된 부분
+# 환경변수 로딩
+load_dotenv(".env")
 
-def test_db_connection():
-    try:
-        db = SessionLocal()
-        db.execute(text("SELECT 1"))  # ✅ text()로 감싸기
-        print("✅ DB 연결 성공!")
-    except Exception as e:
-        print("❌ DB 연결 실패:", e)
-    finally:
-        db.close()
-        print("🔒 DB 세션 종료")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DB_NAME = os.getenv("DB_NAME")
 
-if __name__ == "__main__":
-    test_db_connection()
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
+try:
+    engine = create_engine(DATABASE_URL)
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+        print("✅ DB 연결 성공")
+except Exception as e:
+    print("❌ DB 연결 실패:", e)
