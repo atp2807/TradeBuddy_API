@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 class TradeCreate(BaseModel):
     user_id: int
@@ -15,3 +16,6 @@ class TradeResponse(TradeCreate):
 
     class Config:
         from_attributes = True  # Pydantic v2 호환
+
+class TradeBulkCreate(BaseModel):
+    trades: List[TradeCreate]
