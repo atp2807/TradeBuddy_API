@@ -1,8 +1,15 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr
+
 
 class UserCreate(BaseModel):
-    username: str = Field(..., description="사용자 이름")
-    email: str = Field(..., description="이메일 주소")
+    username: str
+    email: EmailStr
 
-class UserResponse(UserCreate):
-    id: int = Field(..., description="사용자 ID")
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+
+    class Config:
+        orm_mode = True
