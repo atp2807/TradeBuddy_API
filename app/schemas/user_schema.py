@@ -1,14 +1,8 @@
-# app/schemas/user_schema.py
-from pydantic import BaseModel, EmailStr
-from datetime import datetime
+from pydantic import BaseModel, Field
 
 class UserCreate(BaseModel):
-    email: EmailStr
+    username: str = Field(..., description="사용자 이름")
+    email: str = Field(..., description="이메일 주소")
 
-class UserResponse(BaseModel):
-    id: int
-    email: EmailStr
-    created_at: datetime
-
-    class Config:
-        from_attributes = True  # Pydantic v2 대응
+class UserResponse(UserCreate):
+    id: int = Field(..., description="사용자 ID")

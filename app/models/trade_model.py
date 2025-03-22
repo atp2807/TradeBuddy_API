@@ -1,7 +1,7 @@
 # app/models/trade_model.py
 from sqlalchemy import Column, Integer, String, DECIMAL, DateTime, ForeignKey
 from sqlalchemy.sql import func
-from app.database import Base
+from app.db.session import Base
 
 class Trade(Base):
     __tablename__ = "trades"
