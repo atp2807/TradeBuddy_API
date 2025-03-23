@@ -1,14 +1,18 @@
 from pydantic import BaseModel
-from datetime import datetime
 from typing import List
+from datetime import datetime
 
 class TradeCreate(BaseModel):
     user_id: int
-    symbol: str
-    side: str
-    price: float
-    quantity: float
-    trade_time: datetime
+    stock_symbol: str
+    stock_name: str
+    trade_time: str
+    trade_price: float
+    trade_quantity: float
+    trade_type: str
+    message_source: str
+    trade_status: str
+    market_country: str
 
 class TradeResponse(TradeCreate):
     id: int

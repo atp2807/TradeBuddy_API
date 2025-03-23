@@ -12,7 +12,7 @@ def upload_trade(trade: TradeCreate, db: Session = Depends(get_db)):
     return create_trade(db, trade)
 
 # ✅ 여러 트레이드 bulk 업로드
-@router.post("/trades/bulk")
+@router.post("/bulk")
 def upload_bulk_trades(trades: TradeBulkCreate, db: Session = Depends(get_db)):
     try:
         result = create_trade_bulk(db, trades.trades)
