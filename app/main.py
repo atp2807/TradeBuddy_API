@@ -6,11 +6,22 @@ from app.api.user_routes import router as user_router
 from app.api import fieldnames
 
 from app.api.metadata_routes import router as metadata_router
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://mydeeptrack.com",
+        "https://www.mydeeptrack.com"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 app.include_router(user_router, prefix="/users", tags=["Users"])
 app.include_router(trade_router, prefix="/trades", tags=["Trades"])
-
 app.include_router(metadata_router, prefix="/meta", tags=["Metadata"])
 app.include_router(fieldnames.router)
