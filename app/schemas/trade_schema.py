@@ -12,7 +12,7 @@ class TradeCreate(BaseModel):
     trade_type: str
     message_source: str
     trade_status: str
-    market_country: str
+    market_type: str
 
 class TradeResponse(TradeCreate):
     id: int

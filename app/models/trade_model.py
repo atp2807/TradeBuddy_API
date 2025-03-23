@@ -16,4 +16,4 @@ class Trade(Base):
     message_source = Column(String, nullable=False)
     trade_status = Column(String, nullable=False)
     created_at = Column(DateTime, server_default=func.now())
-    market_country = Column(String(10))
+    market_type = Column(String(10))
